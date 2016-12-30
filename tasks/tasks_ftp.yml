@@ -20,5 +20,6 @@
 
   - name: FTP |  Restart service
     service: name=vsftpd state=restarted enabled=yes
+    when: docker_test is not defined
     tags:
       - ftp
