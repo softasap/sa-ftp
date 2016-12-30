@@ -1,0 +1,8 @@
+---
+# defaults file for sa-ftp
+
+vsftpd_default_props:
+    - {regexp: "^[#]?anonymous_enable=*", line: "anonymous_enable=NO"}
+    - {regexp: "^[#]?local_enable=*", line: 'local_enable=YES'}
+    - {regexp: "^[#]?write_enable=*", line: 'write_enable=YES'}
+    - {regexp: "^[#]?chroot_local_user=*", line: 'chroot_local_user=YES'}

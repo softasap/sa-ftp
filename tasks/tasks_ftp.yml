@@ -1,0 +1,24 @@
+---
+
+  - name:  FTP | Installing packages
+    apt: pkg=vsftpd state=present
+    tags:
+      - ftp
+
+  - name: FTP | Patch /etc/vsftpd.conf
+    lineinfile: dest=/etc/vsftpd.conf  regexp="{{item.regexp}}" line="{{item.line}}" insertafter="{{item.insertafter | default('EOF')}}"
+    with_items: "{{vsftpd_default_props | default([])}}"
+    become: yes
+    tags:
+      - knockd
+
+  - name:  FTP | Create OS ftp users
+    user:  name="{{ item.username }}" comment="{{ item.comment | default(item.username)}}"  password="{{ item.password }}"  shell=/usr/sbin/nologin
+    with_items: "{{ vsftpd_users | default([]) }}"
+    tags:
+      - ftp
+
+  - name: FTP |  Restart service
+    service: name=vsftpd state=restarted enabled=yes
+    tags:
+      - ftp

@@ -1,0 +1,3 @@
+---
+# tasks file for sa-ftp
+  - include: tasks_ftp.yml
